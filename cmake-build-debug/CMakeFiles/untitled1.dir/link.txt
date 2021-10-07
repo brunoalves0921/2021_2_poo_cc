@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/untitled1.dir/estresse01.cpp.o -o untitled1 
