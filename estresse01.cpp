@@ -3,34 +3,36 @@
 #include <cstdlib>
 #include <time.h>   
 
-void PRINTAR(std::vector<int>& VETOR){
+void PRINTAR(std::vector<int>& VETOR) {
     std::cout << "[ ";
     if(VETOR.size() != 0){
         std::cout << VETOR[0];
     }
 
-    for (unsigned int i = 1; i < VETOR.size(); i++){
+    for (unsigned int i = 1; i < VETOR.size(); i++) {
         std::cout << ", " << VETOR[i];
     }
     std::cout << " ]\n";
 }
+void TROCAR(int& a, int& b) {
+    int aux = a;
+    a = b;
+    b = aux;
+}
 //BUSCA-----------------------------------------------------------------------------------------------------------------
 
 //01 - Existe
-void EXISTE(std::vector<int>& VETOR){
-    int x = 0;
-    std::cout << "Digite o numero que deseja achar: \n";
-    std::cin >> x;
+bool EXISTE(std::vector<int>& VETOR, int a, int& pos) {
     for (unsigned int i = 0; i < VETOR.size(); i++) {
-        if(VETOR[i] == x){
-            std::cout << "Existe pelo menos uma pessoa com o valor " << x <<" na fila\n";
-            return;
+        if(VETOR[i] == a){
+            pos = i;
+            return true;
         }
     }
-    std::cout << "Nao existe ninguem na fila com este numero\n";
+    return false;
 }
 //02 - CONTAR
-void CONTAR(std::vector<int>& VETOR){
+void CONTAR(std::vector<int>& VETOR) {
     int x = 0;
     int repete = 0;
     std::cout << "Digite o numero que deseja achar: \n";
@@ -45,7 +47,7 @@ void CONTAR(std::vector<int>& VETOR){
         std::cout << "Nao existe ninguem na fila com este nivel de estresse\n";    
 }
 //03 - PROCURAR_VALOR
-void PROCURAR_VALOR(std::vector<int>& VETOR){
+void PROCURAR_VALOR(std::vector<int>& VETOR) {
     int x = 0;
     int lugar_fila = 0;
     std::cout << "Digite o numero que deseja achar: \n";
@@ -61,7 +63,7 @@ void PROCURAR_VALOR(std::vector<int>& VETOR){
     std::cout << "Nao existe ninguem na fila com este nivel de estresse"; 
 }
 //04 - PROCURAR_VALOR_APOS
-void PROCURAR_VALOR_APOS(std::vector<int>& VETOR){
+void PROCURAR_VALOR_APOS(std::vector<int>& VETOR) {
     int x = 0;
     unsigned int i = 0;
     std::cout << "Digite o numero que deseja achar: \n";
@@ -93,7 +95,7 @@ void PROCURAR_MENOR(std::vector<int>& VETOR){
     std::cout << "O menor valor da lista eh: " << menor << "\n";
 }
 //PROCURAR_MAIOR
-void PROCURAR_MAIOR(std::vector<int>& VETOR){
+void PROCURAR_MAIOR(std::vector<int>& VETOR) {
 
     int maior = VETOR[0];
 
@@ -104,7 +106,7 @@ void PROCURAR_MAIOR(std::vector<int>& VETOR){
     std::cout << "O maior valor da lista eh: " << maior << "\n";
 }
 //PROCURAR MENOR POS
-void PROCURAR_MENOR_POS(std::vector<int>& VETOR){
+void PROCURAR_MENOR_POS(std::vector<int>& VETOR) {
 
     int menor = VETOR[0];
 
@@ -121,7 +123,7 @@ void PROCURAR_MENOR_POS(std::vector<int>& VETOR){
     
 }
 //PROCURAR MENOR POS APOS
-void PROCURAR_MENOR_POS_APOS(std::vector<int>& VETOR){
+void PROCURAR_MENOR_POS_APOS(std::vector<int>& VETOR) {
 
     int menor = VETOR[0];
 
@@ -143,7 +145,7 @@ void PROCURAR_MENOR_POS_APOS(std::vector<int>& VETOR){
     }
 }
 //PROCURAR MELHOR SE
-void PROCURAR_MELHOR_SE(std::vector<int>& VETOR){
+void PROCURAR_MELHOR_SE(std::vector<int>& VETOR) {
 
     int menor = 999999;
     int pos = 0;
@@ -173,7 +175,7 @@ void CALCULAR_STRESS_MEDIO(std::vector<int>& VETOR){
     std::cout << "A media de stress na fila eh de: " << media / (VETOR.size()) <<"\n";
 }
 //MAIS HOMENS OU MULHERES
-void MAIS_HOMENS_OU_MULHERES(std::vector<int>& VETOR){
+void MAIS_HOMENS_OU_MULHERES(std::vector<int>& VETOR) {
 
     int homens = 0;
     int mulheres = 0;
@@ -192,7 +194,7 @@ void MAIS_HOMENS_OU_MULHERES(std::vector<int>& VETOR){
         std::cout << "Existem mais homens na fila do que mulheres\n";
 }
 //QUAL METADE EH MAIS ESTRESSADA
-void QUAL_METADE_EH_MAIS_ESTRESSADA(std::vector<int>& VETOR){
+void QUAL_METADE_EH_MAIS_ESTRESSADA(std::vector<int>& VETOR) {
 
 unsigned int meio = VETOR.size()/2;
 int metade_direita = 0;
@@ -223,7 +225,7 @@ int metade_esquerda = 0;
         std::cout << "A metade da esquerda esta mais estressada\n";
 }
 //HOMENS SAO MAIS ESTRESSADOS QUE MULHERES
-void HOMENS_SAO_MAIS_ESTRESSADOS_QUE_MULHERES(std::vector<int>& VETOR){
+void HOMENS_SAO_MAIS_ESTRESSADOS_QUE_MULHERES(std::vector<int>& VETOR) {
 
     int homens = 0;
     int mulheres = 0;
@@ -244,8 +246,8 @@ void HOMENS_SAO_MAIS_ESTRESSADOS_QUE_MULHERES(std::vector<int>& VETOR){
 
 //Filter - Operações de Filtragem: 4 funções----------------------------------------------------------------------------
 
-//clonas
-std::vector<int> CLONAR(std::vector<int>& VETOR){
+//clonar
+std::vector<int> CLONAR(std::vector<int>& VETOR) {
 
     std::vector<int> VETOR_NOVO((int)VETOR.size());
 
@@ -255,7 +257,7 @@ std::vector<int> CLONAR(std::vector<int>& VETOR){
     return VETOR_NOVO;
 }
 //pegar_homens
-std::vector<int> PEGAR_HOMENS(std::vector<int>& VETOR){
+std::vector<int> PEGAR_HOMENS(std::vector<int>& VETOR) {
 
     std::vector<int> VETOR_NOVO{};
     for(unsigned int i = 0; i < VETOR.size(); i++) {
@@ -266,7 +268,7 @@ std::vector<int> PEGAR_HOMENS(std::vector<int>& VETOR){
     return VETOR_NOVO;
 }
 //pegar_calmos
-std::vector<int> PEGAR_CALMOS(std::vector<int>& VETOR){
+std::vector<int> PEGAR_CALMOS(std::vector<int>& VETOR) {
     
     std::vector<int> VETOR_NOVO{};
 
@@ -279,7 +281,7 @@ std::vector<int> PEGAR_CALMOS(std::vector<int>& VETOR){
     return VETOR_NOVO;
 }
 //pegar mulheres calmas
-std::vector<int> PEGAR_MULHERES_CALMAS(std::vector<int>& VETOR){
+std::vector<int> PEGAR_MULHERES_CALMAS(std::vector<int>& VETOR) {
 
     std::vector<int> VETOR_NOVO{};
 
@@ -294,11 +296,11 @@ std::vector<int> PEGAR_MULHERES_CALMAS(std::vector<int>& VETOR){
 // Acesso -------------------------------------------------------------------------------------------------------------------
 
 //INVERTER COM COPIA
-std::vector<int> INVERTER_COM_COPIA(std::vector<int>& VETOR){
+std::vector<int> INVERTER_COM_COPIA(std::vector<int>& VETOR) {
 
     std::vector<int> VETOR_NOVO{};
 
-    for (int i = VETOR.size() -1; i >= 0; i--){
+    for (int i = VETOR.size() -1; i >= 0; i--) {
         VETOR_NOVO.push_back(VETOR[i]);
     }
     return VETOR_NOVO;
@@ -307,10 +309,8 @@ std::vector<int> INVERTER_COM_COPIA(std::vector<int>& VETOR){
 //REVERTER INPLACE
 void REVERTER_INPLACE(std::vector<int>& VETOR){
 
-    for (unsigned int i = 0; i < VETOR.size() / 2; i++){
-        int aux = VETOR[i];
-        VETOR[i] = VETOR[VETOR.size() -1 -i];
-        VETOR[VETOR.size() -1 -i] = aux;
+    for (unsigned int i = 0; i < VETOR.size() / 2; i++) {
+        TROCAR(VETOR[i], VETOR[VETOR.size() -1 -i]);
     }
 
 }
@@ -319,6 +319,76 @@ int SORTEAR(std::vector<int>& VETOR){
     int sorteio = rand() % VETOR.size();
     return VETOR[sorteio];
 }
+//EMBARALHAR
+void EMBARALHAR(std::vector<int>& VETOR){
+
+    for (unsigned int i = 0; i < VETOR.size(); i++) {
+        int sorteio = rand() % VETOR.size();
+        TROCAR(VETOR[sorteio], VETOR[i]);
+    }
+}
+//ordenar
+void ORDENAR(std::vector<int>& VETOR){
+    
+    for (unsigned int i = 0; i < VETOR.size(); i++) {
+        int *menor = &VETOR[i];
+        for (unsigned j = i + 1; j < VETOR.size(); j++) {
+            if (abs(VETOR[j]) < abs(*menor)) {
+                menor = &VETOR[j];
+            }
+        }
+        TROCAR(*menor, VETOR[i]);
+    }
+
+}
+
+//CONJUNTO------------------------------------------------------------------------------------------------------------
+
+//EXCLUSIVOS
+std::vector<int> EXCLUSIVOS(std::vector<int>& VETOR) {
+
+    std::vector<int> VETOR_NOVO {};
+    int pos;
+
+    for (unsigned int i = 0; i < VETOR.size(); i++){
+        if(!EXISTE(VETOR_NOVO, VETOR[i], pos)) {
+            VETOR_NOVO.push_back(VETOR[i]);
+        }
+
+    }
+    return VETOR_NOVO;
+}
+//DIFERENTES
+std::vector<int> DIFERENTES(std::vector<int>& VETOR) {
+
+    std::vector<int> VETOR_NOVO {};
+    int pos;
+
+    for (unsigned int i = 0; i < VETOR.size(); i++){
+        if(!EXISTE(VETOR_NOVO, abs(VETOR[i]), pos)) {
+            VETOR_NOVO.push_back(abs(VETOR[i]));
+        }
+    }
+    return VETOR_NOVO;
+}
+//ABANDONADOS
+std::vector<int> ABANDONADOS(std::vector<int>& VETOR) {
+
+    std::vector<int> excluidos = EXCLUSIVOS(VETOR);
+    std::vector<int> VETOR_NOVO {};
+    int pos;
+
+    for(unsigned int i = 0; i < VETOR.size(); i++) {
+        if(EXISTE(excluidos, VETOR[i], pos)) {
+            excluidos.erase(excluidos.begin() + pos);
+        }
+        else {
+            VETOR_NOVO.push_back(VETOR[i]);
+        }
+    }
+    return VETOR_NOVO;
+}
+
 
 int main(){
 
@@ -366,7 +436,17 @@ int main(){
                 std::cin >> opc;
 
                 if(opc == 1){
-                    EXISTE(VETOR);
+                    int a;
+                    int pos;
+                    std::cout << "Digite o número que deseja encontrar: ";
+                    std::cin >> a;
+                    if (EXISTE(VETOR, a, pos)) {
+
+                        std::cout << "Este valor existe e está na posição: " << pos + 1 << "!\n";
+                    }
+                    else {
+                        std::cout << "Não foi encontrado nenhum valor igual ao digitado!\n";
+                    }
                 }
                 else if(opc == 2){
                     CONTAR(VETOR);
@@ -447,7 +527,10 @@ int main(){
             }while(opc != 5);
         }
         if (opc == 4){
-            std::cout << SORTEAR(VETOR) << "\n";
+            // ORDENAR(VETOR);
+            std::vector<int> retorno {ABANDONADOS(VETOR)};
+            PRINTAR(retorno);
+            // std::cout << VETOR << "\n";
         }
     }while(opc != 5);
 }
