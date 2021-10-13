@@ -389,6 +389,20 @@ std::vector<int> ABANDONADOS(std::vector<int>& VETOR) {
     return VETOR_NOVO;
 }
 
+//Map - Manipulação
+//SOZINHOS
+std::vector<int> SOZINHOS(std::vector<int>& VETOR) {
+    std::vector<int> VETOR_NOVO {};
+    int pos;
+
+    for (unsigned int i = 0; i < VETOR.size(); i++) {
+        if(!EXISTE(VETOR_NOVO, abs(VETOR[i]), pos)) {
+            VETOR_NOVO.push_back(abs(VETOR[i]));
+        }
+    }
+    return VETOR_NOVO;
+}
+
 
 int main(){
 
@@ -528,7 +542,7 @@ int main(){
         }
         if (opc == 4){
             // ORDENAR(VETOR);
-            std::vector<int> retorno {ABANDONADOS(VETOR)};
+            std::vector<int> retorno {SOZINHOS(VETOR)};
             PRINTAR(retorno);
             // std::cout << VETOR << "\n";
         }
