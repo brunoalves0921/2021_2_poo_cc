@@ -393,16 +393,111 @@ std::vector<int> ABANDONADOS(std::vector<int>& VETOR) {
 //SOZINHOS
 std::vector<int> SOZINHOS(std::vector<int>& VETOR) {
     std::vector<int> VETOR_NOVO {};
-    int pos;
+    int repete = 0;
 
     for (unsigned int i = 0; i < VETOR.size(); i++) {
-        if(!EXISTE(VETOR_NOVO, abs(VETOR[i]), pos)) {
-            VETOR_NOVO.push_back(abs(VETOR[i]));
+        repete = 0;
+        for (unsigned int j = 0; j < VETOR.size(); j++) {
+            if (i == j) continue;
+            if (abs(VETOR[i]) == abs(VETOR[j])) {
+                repete ++;
+                break;
+            }
+        }
+        if (repete == 0)
+            VETOR_NOVO.push_back(VETOR[i]);
+    }
+    return VETOR_NOVO;
+}
+//mais ocorrencias
+int MAIS_OCORRENCIAS(std::vector<int>& VETOR) {
+    int repete = 0;
+    int maior = 0;
+
+    for (unsigned int i = 0; i < VETOR.size(); i++) {
+        repete = 0;
+        for (unsigned int j = 0; j < VETOR.size(); j++) {
+            if (abs(VETOR[i]) == abs(VETOR[j])) {
+                repete ++;
+            }
+            if (repete > maior)
+                maior = repete;
+        }
+    }
+    return maior;
+}
+//mais recorrentes
+
+std::vector<int> MAIS_RECORRENTES(std::vector<int>& VETOR) {
+    std::vector<int> VETOR_NOVO {};
+    int repete = 0;
+    int maior = 0;
+    int pos = 0;
+
+    for (unsigned int i = 0; i < VETOR.size(); i++) {
+        repete = 0;
+        for (unsigned int j = 0; j < VETOR.size(); j++) {
+            if (abs(VETOR[i]) == abs(VETOR[j])) {
+                repete ++;
+            }
+            if (repete > maior) {
+                VETOR_NOVO.clear();
+                VETOR_NOVO.push_back(abs(VETOR[i]));
+                maior = repete;
+            }
+            else if (repete == maior && !EXISTE(VETOR_NOVO, abs(VETOR[i]), pos)) {
+                VETOR_NOVO.push_back(abs(VETOR[i]));
+            }
         }
     }
     return VETOR_NOVO;
 }
+//briga
+int BRIGA(std::vector<int>& VETOR) {
+    int qtd = 0;
+    for (unsigned int i = 1; i < VETOR.size()-1; i++) {
+        if (abs(VETOR[i]) > 50 && abs(VETOR[i-1]) > 30 && abs(VETOR[i+1]) > 30)
+            qtd++;
+    }
+    return qtd;
+}
+//apaziguado
+std::vector<int> APAZIGUADO(std::vector<int>& VETOR) {
 
+    std::vector<int> VETOR_NOVO {};
+    for (unsigned int i = 0; i < VETOR.size(); i++) {
+        if (abs(VETOR[i]) > 80 && ((i > 0 && abs(VETOR[i-1]) < 10) || (i < VETOR.size()-1 && abs(VETOR[i+1]) < 10)))
+            VETOR_NOVO.push_back(i);
+    }
+    return VETOR_NOVO; 
+}
+//times
+int TIMES(std::vector<int>& VETOR) {
+
+    int times = 0;
+    int gen = 0;
+    int aux = 0;
+    
+    if (VETOR.size() > 0) {
+        if (VETOR[0] > 0)
+            gen = 1;
+        else
+            gen = -1;
+    }
+    for (unsigned int i = 0; i < VETOR.size()-1; i++) {
+        
+        if (VETOR[i] * gen > 0 && VETOR[i+1] * gen > 0) {
+            if (aux == 0)
+                times++;
+            aux = 1;
+        }
+        else {
+            aux = 0;
+            gen *= -1;
+        }
+    }
+    return times;
+}
 
 int main(){
 
@@ -541,10 +636,12 @@ int main(){
             }while(opc != 5);
         }
         if (opc == 4){
-            // ORDENAR(VETOR);
-            std::vector<int> retorno {SOZINHOS(VETOR)};
-            PRINTAR(retorno);
-            // std::cout << VETOR << "\n";
+
+            //std::vector<int> teste = MAIS_RECORRENTES(VETOR);
+            //std::vector<int> retorno {APAZIGUADO(VETOR)};
+            int num = TIMES(VETOR);
+            //PRINTAR(retorno);
+            std::cout << num << "\n";
         }
     }while(opc != 5);
 }
