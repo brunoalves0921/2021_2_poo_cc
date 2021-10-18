@@ -477,7 +477,7 @@ int TIMES(std::vector<int>& VETOR) {
     int times = 0;
     int gen = 0;
     int aux = 0;
-    
+
     if (VETOR.size() > 0) {
         if (VETOR[0] > 0)
             gen = 1;
@@ -497,6 +497,123 @@ int TIMES(std::vector<int>& VETOR) {
         }
     }
     return times;
+}
+//maior time
+int MAIOR_TIME(std::vector<int>& VETOR) {
+
+    int tamanho = 1;
+    int gen = 0;
+    int maior = 0;
+
+    if (VETOR.size() > 0) {
+        if (VETOR[0] > 0)
+            gen = 1;
+        else
+            gen = -1;
+    }
+    for (unsigned int i = 0; i < VETOR.size()-1; i++) {
+        
+        if (VETOR[i] * gen > 0 && VETOR[i+1] * gen > 0) {
+            tamanho++;
+            if(tamanho > maior)
+                maior = tamanho;
+        }
+        else {
+            tamanho = 1;
+            gen *= -1;
+        }
+    }
+    return maior;
+}
+//sozinhos
+int SOZINHOS_2(std::vector<int>& VETOR) {
+
+    int gen = 0;
+    int qtd = 0;
+
+    if (VETOR.size() > 0) {
+        if (VETOR[0] > 0)
+            gen = 1;
+        else
+            gen = -1;
+    }
+    else
+        return 0;
+    if (VETOR.size() == 1)
+        return 1;
+    if (VETOR.size() == 2) {
+        if(VETOR[1] * gen > 0)
+            return 0;
+        else 
+            return 2;
+    }
+
+    for (unsigned int i = 0; i < VETOR.size()-1; i++) {
+        
+        if (!(VETOR[i] * gen > 0 && VETOR[i+1] * gen > 0)) {
+            gen *= -1;
+            qtd++;
+        }
+    }
+    if (VETOR[VETOR.size()-1] != VETOR[VETOR.size()-2])
+        qtd++;
+    return qtd;
+}
+//casais
+int CASAIS(std::vector<int>& VETOR) {
+
+    int casal = 0;
+
+    for (unsigned int i = 0; i < VETOR.size(); i++) {
+        for (unsigned int j = i + 1; j < VETOR.size(); j++) {
+            if (abs(VETOR[i]) == abs(VETOR[j]) && VETOR[i] * VETOR[j] < 0) {
+                casal++;
+            }
+        }
+    }
+    return casal;
+}
+//trios
+int TRIOS(std::vector<int>& VETOR) {
+
+    int trio = 0;
+
+    for (unsigned int i = 0; i < VETOR.size(); i++) {
+        for (unsigned int j = i + 1; j < VETOR.size(); j++) {
+            for (unsigned int k = j + 1; k < VETOR.size(); k++) {
+                if (abs(VETOR[i]) == abs(VETOR[j]) && abs(VETOR[j]) == abs(VETOR[k])) {
+                    trio++;
+                }
+            }
+        }
+    }
+    return trio;
+}
+//remove
+int REMOVE(std::vector<int>& VETOR, int num) {
+
+    for (unsigned int i = 0; i < VETOR.size(); i++) {
+        if (VETOR[i] == num) {
+            VETOR.erase(VETOR.begin() + i);
+            return i;
+        }
+    }
+    return -1;
+}
+//insert
+
+bool INSERT(std::vector<int>& VETOR, int num, unsigned int pos) {
+
+    if (pos > VETOR.size())
+        return false;
+    VETOR.push_back(num);
+
+    for (unsigned int i = VETOR.size(); i > pos ; i--) {
+        VETOR[i] = VETOR[i - 1];
+    }
+    VETOR[pos] = num;
+    return true;
+    
 }
 
 int main(){
@@ -639,9 +756,14 @@ int main(){
 
             //std::vector<int> teste = MAIS_RECORRENTES(VETOR);
             //std::vector<int> retorno {APAZIGUADO(VETOR)};
-            int num = TIMES(VETOR);
+            int num;
+            int pos;
+            std::cin >> num;
+            std::cin >> pos;
+            INSERT(VETOR, num, pos);
             //PRINTAR(retorno);
-            std::cout << num << "\n";
+            std::cout << "\nA nova fila agora será: \n";
+            PRINTAR(VETOR);
         }
     }while(opc != 5);
 }
