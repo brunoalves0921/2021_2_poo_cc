@@ -17,12 +17,12 @@ friend std::ostream& operator<<(std::ostream& os, const Grafite& grafite) {
         return os;
     }
  };
-
+ 
  struct Lapiseira {
-     float calibre;
-     Grafite*  grafite;
-     bool temGrafite;
-     Lapiseira(float calibre, Grafite* grafite = nullptr) :
+    float calibre;
+    Grafite*  grafite;
+    bool temGrafite;
+    Lapiseira(float calibre, Grafite* grafite = nullptr) :
         calibre{calibre}, grafite{grafite} {
     }
     bool inserirGrafite(Grafite* grafite) {
@@ -37,6 +37,20 @@ friend std::ostream& operator<<(std::ostream& os, const Grafite& grafite) {
         this->grafite = grafite;
         return true;
     }
+
+    bool retirarGrafite() {
+        if(this->grafite == nullptr) {
+            std::cout << "Não tem grafite" << "\n";
+            return false;
+        }
+        this->grafite = nullptr;
+        return true;
+    }
+
+    bool temGrafite() {
+        return this->grafite != nullptr;
+    }
+
     Grafite* removerGrafite() {
         if(this->grafite == nullptr) {
             std::cout << "Não tem grafite" << "\n";
@@ -58,3 +72,6 @@ int main() {
 
     return 0;
 }
+
+
+
