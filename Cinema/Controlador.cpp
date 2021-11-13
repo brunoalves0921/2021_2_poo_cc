@@ -38,13 +38,13 @@ void Controlador::iniciar(){
                     break;
             }
         }
-        else if (comando == "cancelar") {
+        else if (comando == "cancelar") {//cancela a reserva da pessoa na cadeira
             std::string nome;
             std::cin >> nome;
             if (!sala.cancelar(nome))
                 std::cout << "cliente nao esta no cinema" << std::endl;
         }
-        else if (comando == "end") {
+        else if(comando == "end") {
             break;
         }
         else {

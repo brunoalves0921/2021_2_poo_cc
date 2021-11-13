@@ -18,6 +18,7 @@ class Sala {
             SUCESSO,
         };
         Sala(int capacidade = 0);
+        ~Sala();
         Estado reservar(std::string nome, std::string telefone, int cadeira);
         bool cancelar(std::string nome);
         std::string toString();

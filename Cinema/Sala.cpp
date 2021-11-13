@@ -7,6 +7,15 @@ Sala::Sala(int capacidade) {
     }
 }
 
+Sala::~Sala() {
+    for (int i = 0; i < (int) cadeiras.size(); i++) {
+        if (cadeiras[i] != nullptr) {
+            delete cadeiras[i];
+            cadeiras[i] = nullptr;
+        }
+    }
+}
+
 Sala::Estado Sala::reservar(std::string nome, std::string telefone, int cadeira) {
     if (cadeira < 0 || cadeira >= (int) cadeiras.size()) {
         return Estado::CADEIRA_INVALIDA;
@@ -23,10 +32,11 @@ Sala::Estado Sala::reservar(std::string nome, std::string telefone, int cadeira)
     return Estado::SUCESSO;
 }
 bool Sala::cancelar(std::string nome) {
-    for (Cliente *cliente : cadeiras) {
-        if (cliente != nullptr && cliente->getNome() == nome) {
-            delete cliente;
-            cliente = nullptr;
+    for (int i = 0; i < (int) cadeiras.size(); i++) {
+        if (cadeiras[i] != nullptr && cadeiras[i]->getNome() == nome) {
+            delete cadeiras[i];
+            cadeiras[i] = nullptr;
+            return true;
         }
     }
     return false;
