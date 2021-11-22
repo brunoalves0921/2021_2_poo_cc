@@ -1,5 +1,6 @@
 #include "Phone.h"
 #include "Contact.h"
+#include "Agend.h"
 #include <iostream>
 void ajuda(){
     std::cout << "         Boas vindas à POO Agenda!" << std::endl;
@@ -8,10 +9,13 @@ void ajuda(){
     std::cout << "| $remover <Index> : Para remover um telefone" << std::endl;
     std::cout << "| $show : Para listar os telefones" << std::endl;
     std::cout << "| $end : Para sair" << std::endl;
+    std::cout << "| $select <Nome>: Para selecionar qual contato deseja modificar" << std::endl;
+    std::cout << "| $list : Para mostrar a lista com os nomes dos contatos cadastrados" << std::endl;
     std::cout << "| $ajuda : Para exibir este menu de ajuda novamente" << std::endl;
 }
 int main () {
-    Contact c;
+    Contact* currentContact = nullptr;
+    Agend agenda;
     Phone f;
     ajuda();
     while(true){
@@ -20,9 +24,12 @@ int main () {
         if(str == "init") {
             std::string name;
             std::cin >> name;
-            c = Contact(name);
-            std::cout << c.toString() << std::endl;
-
+            currentContact = new Contact(name);
+            agenda.addContact(*currentContact);
+            std::cout << currentContact->toString() << std::endl;
+        }
+        else if (str != "end" && currentContact == nullptr) {
+            std::cout << "Agenda está vazia, por favor ultilize o comando init <Name> primeiro" << std::endl;
         }
         else if(str == "add") {
             std::string id;
@@ -30,26 +37,54 @@ int main () {
             std::cin >> id >> number;
             if(f.isValid(number)) {
                 f = Phone(id, number);
-                c.addPhone(f);
-                std::cout << c.toString() << std::endl;
+                currentContact->addPhone(f);
+                std::cout << currentContact->toString() << std::endl;
             }
             else {
                 std::cout << "Numero invalido" << std::endl;
             }
         }
-        else if(str == "remover") {
+        else if(str == "select") {
+            std::string nome;
+            std::cin >> nome;
+            if (nome == currentContact->getName()) {
+                std::cout << "Contato já estava selecionado!" << std::endl;
+            }
+            else {
+                Contact* aux = agenda.getContact(nome);
+                if (aux != nullptr) {
+                    currentContact = aux;
+                    std::cout << "Contato selecionado!" << std::endl;
+                }
+                else {
+                    std::cout << "Contato não encontrado!" << std::endl;
+                }
+            }
+        }
+        else if (str == "remover") {
             int indice;
             std::cin >> indice;
-            c.removePhone(indice);
-            std::cout << c.toString() << std::endl;
+            currentContact->removePhone(indice);
+            std::cout << currentContact->toString() << std::endl;
         }
-        else if(str == "show") {
-            std::cout << c.toString() << std::endl;
+        else if (str == "delete") {
+            std::string nome;
+            std::cin >> nome;
+            agenda.removeContact(nome);
         }
-        else if(str == "end") {
+        else if (str == "show") {
+            std::cout << currentContact->toString() << std::endl;
+        }
+        else if (str == "list") {
+            std::cout << agenda.toString();
+        }
+        else if (str == "ajuda") {
+            ajuda();
+        }
+        else if (str == "end") {
             break;
         }
-        else if(str == "ajuda") {
+        else if (str == "ajuda") {
             ajuda();
         }
         else {
