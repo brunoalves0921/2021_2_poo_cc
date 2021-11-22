@@ -71,6 +71,12 @@ int main () {
             std::string nome;
             std::cin >> nome;
             agenda.removeContact(nome);
+            if (agenda.getContacts().size() == 0) {
+                currentContact = nullptr;
+            }
+            else {
+                currentContact = &*agenda.getContacts()[0];
+            }
         }
         else if (str == "show") {
             std::cout << currentContact->toString() << std::endl;
