@@ -21,6 +21,7 @@ public:
     void ligar() {
         if (!ligado) {
             ligado = true;
+            std::cout << "Ligando..." << std::endl;
         }
         else {
             std::cout << "O automóvel já está ligado" << std::endl;
@@ -119,6 +120,91 @@ public:
         }
     }
 };
+//veiculos aéreos
+class Aereo : public Automovel {
+    protected:
+        int altitude = 0;
+    public:
+        virtual void voar() {
+            if (isLigado() && getCombustivel() > 0) {
+                velocidade += 10;
+            }
+            else {
+                std::cout << "O automóvel não está ligado" << std::endl;
+            }
+        }
+        void frear() {
+            if (isLigado() && velocidade > 0) {
+                velocidade -= 10;
+            }
+            else if (isLigado() && velocidade == 0) {
+                std::cout << "O automóvel já está parado" << std::endl;
+            }
+            else {
+                std::cout << "O automóvel não está ligado" << std::endl;
+            }
+        }
+        bool isVooando() {
+            if (altitude > 0) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        void setAltitude(int altitude) {
+            this->altitude = altitude;
+        }
+        int getAltitude() {
+            return altitude;
+        }
+};
+class Aviao : public Aereo {
+    public:
+        void acelerar() override {
+            if (isLigado() && getCombustivel() > 0) {
+                velocidade += 50;
+                if( velocidade <= 200)
+                    std::cout << "O avião está a: " << velocidade << " Km/h." << std::endl;
+                combustivel -= 50;
+                if (velocidade > 200) {
+                    isVooando();
+                    altitude += 100;
+                    std::cout << "O avião está a: " << velocidade << " Km/h e está a:"<< altitude << " m de altura"<< std::endl;
+                }
+            }
+            else if (isLigado() && getCombustivel() == 0) {
+                std::cout << "O avião não tem  mais combustível" << std::endl;
+                while (getAltitude() > 0 && isVooando()) {
+                    altitude -= 50;
+                    velocidade += 50;
+                    if (altitude <= 0) {
+                        std::cout << "O avião caiu!" << std::endl;
+                    }
+                    else {
+                        std::cout << "O avião está a: " << altitude << " metros e está a:" << velocidade << "Km/h." << std::endl;
+                    }
+                }
+            }
+            else {
+                std::cout << "O avião não está ligado" << std::endl;
+            }
+        }
+        void abastecer() override{
+            combustivel += 100;
+            std::cout << "O avião está com " << combustivel << " litros de combustível." << std::endl;
+            if (combustivel > 1000) {
+                combustivel = 1000;
+                std::cout << "O avião já está com o tank cheio!" << std::endl;
+            }
+        }
+};
+    
+
+
+
+
+
 int main () {
 
     Carro carro;
@@ -135,6 +221,21 @@ int main () {
     carro.acelerar();
     carro.acelerar();
     carro.acelerar();
+    Aviao aviao;
+    aviao.ligar();
+    aviao.abastecer();
+    aviao.abastecer();
+    aviao.abastecer();
+    aviao.abastecer();
+    aviao.acelerar();
+    aviao.acelerar();
+    aviao.acelerar();
+    aviao.acelerar();
+    aviao.acelerar();
+    aviao.acelerar();
+    aviao.acelerar();
+    aviao.acelerar();
+    aviao.acelerar();
     
     return 0;
 }
