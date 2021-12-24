@@ -9,7 +9,7 @@
 class Cp : public Conta {
     //construtor
     public:
-    Cp(std::string id, std::string clienteId) : Conta(id, clienteId, "CP") {
+    Cp(std::string id, std::string clienteId, double saldo = 0) : Conta(id, clienteId, "CP", saldo) {
     }
 
     void attMensal() override {

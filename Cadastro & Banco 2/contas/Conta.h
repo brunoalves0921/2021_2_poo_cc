@@ -8,12 +8,12 @@
 
 class Conta {
     protected:
-        double saldo = 0;
         std::string id;
         std::string clienteId;
         std::string tipo;
+        double saldo;
     public:
-        Conta(std::string id, std::string clienteId, std::string tipo): id(id), clienteId(clienteId), tipo(tipo) {
+        Conta(std::string id, std::string clienteId, std::string tipo, double saldo): id(id), clienteId(clienteId), tipo(tipo), saldo(saldo) {
         }
         virtual ~Conta() {
         }
@@ -30,9 +30,6 @@ class Conta {
             }
             checkValor(valor);
             saldo -= valor;
-        }
-        void setSaldo(double saldo) {
-            this->saldo = saldo;
         }
         virtual void depositar(double valor) {
             checkValor(valor);
@@ -69,11 +66,6 @@ class Conta {
         virtual std::string getTipo() {
             return tipo;
         }
-
-
-
-
-
 };
 
 #endif

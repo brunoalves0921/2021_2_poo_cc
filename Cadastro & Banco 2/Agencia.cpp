@@ -36,11 +36,10 @@ void Agencia::lerArquivo() {
     Cliente* cliente;
     while (f >> clienteId >> id >> tipo >> saldo) {
         if (tipo == "CP") {
-            conta = new Cp(id, clienteId);
+            conta = new Cp(id, clienteId, saldo);
         } else {
-            conta = new Cc(id, clienteId);
+            conta = new Cc(id, clienteId, saldo);
         }
-        conta->setSaldo(saldo);
         if (clientes.find(clienteId) == clientes.end()) {
             cliente = new Cliente(clienteId);
             clientes[clienteId] = cliente;

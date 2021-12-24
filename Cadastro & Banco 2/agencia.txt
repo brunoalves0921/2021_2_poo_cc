@@ -1,0 +1,6 @@
+bruno 09960-6 CP 1e+10
+bruno 16984-0 CC -20
+victor 54548-7 CC 0
+ninha 74869-0 CP 817.09
+ninha 79813-2 CC 60
+victor 85794-0 CP 0

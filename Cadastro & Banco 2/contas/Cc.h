@@ -8,7 +8,7 @@
 class Cc : public Conta {
     //construtor
     public:
-    Cc(std::string id, std::string clienteId) : Conta(id, clienteId, "CC") {
+    Cc(std::string id, std::string clienteId, double saldo = 0) : Conta(id, clienteId, "CC", saldo) {
     }
     void attMensal() override{
         saldo -= 20;

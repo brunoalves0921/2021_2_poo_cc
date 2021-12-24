@@ -103,7 +103,7 @@ int main () {
 
             else if(str == "attmensal") {
                 agencia.attMensal();
-                std::cout << "As taxas mensais foram atualizadas com sucesso\n os novos saldos dos clientes são: " << std::endl;
+                std::cout << "As taxas mensais foram atualizadas com sucesso\nos novos saldos dos clientes são: " << std::endl;
                 std::cout << agencia.toString();
             }
             else if (str == "reload") {
