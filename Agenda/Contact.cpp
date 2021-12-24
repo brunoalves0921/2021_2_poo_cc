@@ -9,7 +9,7 @@ void Contact::removePhone(int index) {
 }
 std::string Contact::toString() {
     std::stringstream ss;
-    ss << prefix << " " <<  name << std::endl;
+    ss << prefix << " " << name << std::endl;
     for(int i = 0; i < (int) phones.size(); i++) {
         ss << i << " - "<< "[" << phones[i].getId() << " : " << phones[i].getNumber() << "]" << std::endl;
     }
@@ -17,6 +17,13 @@ std::string Contact::toString() {
 }
 std::string Contact::getName() {
     return name;
+}
+std::string Contact::getPhones() {
+    std::stringstream ss;
+    for(int i = 0; i < (int) phones.size(); i++) {
+        ss << phones[i].getNumber() << " ";
+    }
+    return ss.str();
 }
 void Contact::setName(std::string name) {
     this->name = name;

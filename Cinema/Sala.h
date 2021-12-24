@@ -3,13 +3,13 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Cliente.h"
 #include <sstream>
+#include <map>
+#include "Cliente.h"
 
 class Sala {
     private:
-        std::vector<Cliente*> cadeiras;
-
+        std::map<int, Cliente*> cadeiras;
     public:
         enum Estado {
             CADEIRA_OCUPADA,
@@ -17,8 +17,6 @@ class Sala {
             CLIENTE_EXISTE,
             SUCESSO,
         };
-        Sala(int capacidade = 0);
-        ~Sala();
         Estado reservar(std::string nome, std::string telefone, int cadeira);
         bool cancelar(std::string nome);
         std::string toString();

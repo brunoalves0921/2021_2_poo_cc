@@ -15,7 +15,6 @@ public:
     void setNumber(std::string number);
     std::string getId();
     std::string getNumber();
-    std::string toString();
 };
 
 #endif

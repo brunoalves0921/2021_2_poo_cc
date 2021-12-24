@@ -16,5 +16,6 @@ public:
     bool removeContact(std::string);
     Contact* getContact(std::string);
     std::string toString();
+    void search(std::string);
 };
 #endif

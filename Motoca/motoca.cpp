@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream>
+#include <vector>
 
 struct Pessoa {
     std::string nome;
@@ -70,12 +71,30 @@ struct Moto {
 
 int main() {
   Moto motoca(1);
+  std::vector<Moto *> motos;
+  std::vector<Pessoa *> pessoas;
+
+  Pessoa *p = new Pessoa("Joao", 10);
+  pessoas.push_back(p);
+  p = new Pessoa("Maria", 8);
+  pessoas.push_back(p);
+  p = new Pessoa("Pedro", 12);
+  pessoas.push_back(p);
+
+  Moto *m = new Moto(1);
+  motos.push_back(m);
+  m = new Moto(2);
+  motos.push_back(m);
+  m = new Moto(3);
+  motos.push_back(m);
+
   while(true) {
       std::string line;
       std::getline(std::cin, line);
       std::istringstream iss(line);
       std::string cmd;
       iss >> cmd;
+      std::cout << "Comando: " << cmd << "\n";
       
       if (cmd == "end")
           break;
@@ -88,12 +107,19 @@ int main() {
           std::cout << motoca << "\n";
       }
       else if (cmd == "inserir") {
-          std::string nome {};
-          int idade {};
-          iss >> nome >> idade;
-          Pessoa * pessoa = new Pessoa(nome, idade);
-          if(!motoca.inserirPessoa(pessoa))
-              delete pessoa;
+          for (unsigned int i = 0; i < pessoas.size(); i++) {
+              std::cout << "["<< i << "] " << *pessoas[i] << "\n";
+          }
+          for (unsigned int i = 0; i < motos.size(); i++) {
+              std::cout << "["<< i << "] " << *motos[i] << "\n";
+          }
+          int indice = 0; 
+          std::cin >> indice;//pegando indice pra pessoa
+          Pessoa * pessoa = pessoas[indice];
+          std::cin >> indice;//pegando indice pra moto
+          Moto * moto = motos[indice];
+          if(!moto->inserirPessoa(pessoa))
+              std::cout << "A moto está ocupada!\n";
       }
       else if (cmd == "buzinar") {
           std::cout << motoca.buzinar() << "\n";
@@ -113,5 +139,5 @@ int main() {
       else {
           std::cout << "Comando invalido" << "\n";
       }
-  }
+   }
 }
