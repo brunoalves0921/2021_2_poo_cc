@@ -26,7 +26,7 @@ class Conta {
 
         virtual void sacar(double valor) {
             if (valor > saldo) {
-                throw std::runtime_error("Valor insuficiente");
+                throw std::runtime_error("Saldo insuficiente");
             }
             checkValor(valor);
             saldo -= valor;

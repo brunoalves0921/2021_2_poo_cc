@@ -9,12 +9,13 @@
 void ajuda(){
     std::cout << "                Boas vindas ao POO Bank!" << std::endl;
     std::cout << "| $addCli <Nome> : Para adicionar um cliente ao banco" << std::endl;
-    std::cout << "| $delCli <Nome> : Para remover um cliente do banco" << std::endl;
+    std::cout << "| $remCli <Nome> : Para remover um cliente do banco" << std::endl;
     std::cout << "| $show : Para listar todos os clientes e suas contas" << std::endl;
     std::cout << "| $depositar <id> <valor> : Para depositar um valor em uma conta" << std::endl;
     std::cout << "| $sacar <id> <valor> : Para sacar um valor em uma conta" << std::endl;
     std::cout << "| $transferir <idPag> <valor> <idReceb> : Para transferir um valor de uma conta para outra" << std::endl;
     std::cout << "| $ajuda : Para exibir este menu de ajuda novamente" << std::endl;
+    std::cout << "| $reload : Para recarregar o banco de dados e atualizar os dados no terminal" << std::endl;
     std::cout << "| $exit : Para sair" << std::endl;
 }
 int main () {
@@ -103,6 +104,11 @@ int main () {
             else if(str == "attmensal") {
                 agencia.attMensal();
                 std::cout << "As taxas mensais foram atualizadas com sucesso\n os novos saldos dos clientes são: " << std::endl;
+                std::cout << agencia.toString();
+            }
+            else if (str == "reload") {
+                agencia.lerArquivo();
+                std::cout << "Os dados foram carregados com sucesso\nos novos saldos dos clientes são: " << std::endl;
                 std::cout << agencia.toString();
             }
 

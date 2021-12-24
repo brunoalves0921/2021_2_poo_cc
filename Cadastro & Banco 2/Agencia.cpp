@@ -22,8 +22,8 @@ std::string Agencia::genValidId() {
 void Agencia::salvarArquivo() {
     std::ofstream f;
     f.open("agencia.txt");
-    for (auto it = contas.begin(); it != contas.end(); it++) {
-        f << it->second->getClienteId() << " " << it->second->getId() << " " << it->second->getTipo() << " " << it->second->getSaldo() << std::endl;
+    for (const auto &[id, conta] : contas) {
+        f << conta->getClienteId() << " " << conta->getId() << " " << conta->getTipo() << " " << conta->getSaldo() << "\n";
     }
     f.close();
 }
