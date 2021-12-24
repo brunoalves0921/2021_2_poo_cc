@@ -5,24 +5,28 @@
 #include <string>
 #include <map>
 #include <sstream>
+#include <time.h>
+#include <stdio.h>
+#include <fstream>
 #include "Cliente.h"
 #include "contas/Conta.h"
 
 class Agencia {
     private:
         std::map<std::string, Cliente*> clientes;
-        std::map<int, Conta*> contas;
-        int nextContaId = 1;
-        Conta* getConta(int id);
-        Cliente* getCliente(int id);
+        std::map<std::string, Conta*> contas;
+        std::string genValidId();
+        Conta* getConta(std::string id);
     public:
-        //construtor
         Agencia();
-
-        bool addCliente(Cliente* cliente);
-        void sacar(int id, double valor);
-        void depositar(int id, double valor);
-        void transferir(int id, double valor, int idConta);
+        void addCliente(Cliente* cliente);
+        void delCliente(std::string clienteId);
+        void lerArquivo();
+        void salvarArquivo();
+        void delConta(std::string id);
+        void sacar(std::string id, double valor);
+        void depositar(std::string id, double valor);
+        void transferir(std::string idPag, double valor, std::string idRec);
         void attMensal();
         std::string toString();
 

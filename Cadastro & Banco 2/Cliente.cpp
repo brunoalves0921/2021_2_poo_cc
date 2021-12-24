@@ -9,7 +9,16 @@ Cliente::Cliente(std::string clienteId) {
 void Cliente::addConta(Conta* conta) {
     contas[conta->getId()] = conta;
 }
-
+void Cliente::delConta(std::string id) {
+    contas.erase(id);
+}
+std::vector<Conta*> Cliente::getContas() {
+    std::vector<Conta*> contas;
+    for (const auto &[key, value] : this->contas) {
+        contas.push_back(value);
+    }
+    return contas;
+}
 std::string Cliente::toString() {
     std::stringstream ss;
     ss << "Cliente: " << clienteId << "\n";
@@ -23,7 +32,7 @@ std::string Cliente::getClienteId() {
     return clienteId;
 }
 
-Conta* Cliente::getConta(int id) {
+Conta* Cliente::getConta(std::string id) {
     auto it = contas.find(id);
     if (it != contas.end()) {
         return it->second;

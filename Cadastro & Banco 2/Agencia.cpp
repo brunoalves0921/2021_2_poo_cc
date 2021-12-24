@@ -4,53 +4,126 @@
 #include "contas/Cp.h"
 
 Agencia::Agencia() {
-    // TODO Auto-generated constructor stub
-
+    srand(time(NULL));
+    lerArquivo();
 }
-Conta* Agencia::getConta(int id) {
+std::string Agencia::genValidId() {
+    const std::string validChar = "1234567890";
+    std::stringstream ss;
+    do {
+        ss.clear();
+        for (int i = 0; i < 5; i++) {
+            ss << validChar[rand() % validChar.length()];
+        }
+        ss << "-" << validChar[rand() % validChar.length()];
+    } while (contas.find(ss.str()) != contas.end());
+    return ss.str();
+}
+void Agencia::salvarArquivo() {
+    std::ofstream f;
+    f.open("agencia.txt");
+    for (auto it = contas.begin(); it != contas.end(); it++) {
+        f << it->second->getClienteId() << " " << it->second->getId() << " " << it->second->getTipo() << " " << it->second->getSaldo() << std::endl;
+    }
+    f.close();
+}
+void Agencia::lerArquivo() {
+    std::ifstream f;
+    f.open("agencia.txt");
+    std::string clienteId, id, tipo;
+    double saldo;
+    Conta* conta;
+    Cliente* cliente;
+    while (f >> clienteId >> id >> tipo >> saldo) {
+        if (tipo == "CP") {
+            conta = new Cp(id, clienteId);
+        } else {
+            conta = new Cc(id, clienteId);
+        }
+        conta->setSaldo(saldo);
+        if (clientes.find(clienteId) == clientes.end()) {
+            cliente = new Cliente(clienteId);
+            clientes[clienteId] = cliente;
+        }
+        else {
+            cliente = clientes[clienteId];
+        }
+        cliente->addConta(conta);
+        contas[id] = conta;
+    }
+    f.close();
+}
+Conta* Agencia::getConta(std::string id) {
     return contas[id];
 }
 
-bool Agencia::addCliente(Cliente* cliente) {
+void Agencia::addCliente(Cliente* cliente) {
     if (clientes.find(cliente->getClienteId()) == clientes.end()) {
         clientes[cliente->getClienteId()] = cliente;
-        Cc *conta1 = new Cc(nextContaId++, cliente->getClienteId());
-        Cp *conta2 = new Cp(nextContaId++, cliente->getClienteId());
+        Cc *conta1 = new Cc(genValidId(), cliente->getClienteId());
+        contas[conta1->getId()] = conta1;
+        Cp *conta2 = new Cp(genValidId(), cliente->getClienteId());
+        contas[conta2->getId()] = conta2;
         cliente->addConta(conta1);
         cliente->addConta(conta2);
-        contas[conta1->getId()] = conta1;
-        contas[conta2->getId()] = conta2;
-        return true;
+        salvarArquivo();
     }
-    return false;
+    else {
+        throw std::runtime_error("Cliente ja existe");
+    }
+}
+void Agencia::delCliente(std::string clienteId) {
+    if (clientes.find(clienteId) != clientes.end()) {
+        Cliente* cliente = clientes[clienteId];
+        for (Conta* conta : cliente->getContas()) {
+            cliente->delConta(conta->getId());
+            delConta(conta->getId());
+        }
+        clientes.erase(clienteId);
+        salvarArquivo();
+    }
+    else {
+        throw std::runtime_error("Cliente nao encontrado");
+    }
+}
+void Agencia::delConta(std::string id) {
+    if (contas.find(id) != contas.end()) {
+        contas.erase(id);
+    }
+    else {
+        throw std::runtime_error("Conta nao encontrada");
+    }
 }
 
-void Agencia::sacar(int id, double valor) {
+void Agencia::sacar(std::string id, double valor) {
     Conta* conta = getConta(id);
     if (conta != nullptr) {
         conta->sacar(valor);
+        salvarArquivo();
     }
     else {
         throw std::runtime_error("Conta não encontrada");
     }
 }
 
-void Agencia::depositar(int id, double valor) {
+void Agencia::depositar(std::string id, double valor) {
     Conta* conta = getConta(id);
     if (conta != nullptr) {
         conta->depositar(valor);
+        salvarArquivo();
     }
     else {
         throw std::runtime_error("Conta não encontrada");
     }
 }
 
-void Agencia::transferir(int idRec, double valor, int idPag) {
+void Agencia::transferir(std::string idRec, double valor,std::string idPag) {
     Conta* contaPag = getConta(idRec);
     Conta* contaRec = getConta(idPag);
 
     if (contaPag != nullptr && contaRec != nullptr) {
         contaPag->transferir(valor, *contaRec);
+        salvarArquivo();
     }
     else {
         throw std::runtime_error("Conta não encontrada");
@@ -58,16 +131,27 @@ void Agencia::transferir(int idRec, double valor, int idPag) {
 }
 
 void Agencia::attMensal() {
-    for (auto it = contas.begin(); it != contas.end(); it++) {
-        it->second->attMensal();
+    if (contas.size() > 0) {
+        for (auto it = contas.begin(); it != contas.end(); it++) {
+            it->second->attMensal();
+        }
+        salvarArquivo();
+    }
+    else {
+        throw std::runtime_error("Nenhuma conta cadastrada");
     }
 }
 
-std::string Agencia::toString() {
-    std::string str = "";
-    for (auto it = clientes.begin(); it != clientes.end(); it++) {
-        str += it->second->toString() + "\n";
+std::string Agencia::toString() {    
+    if (contas.size() > 0) {
+        std::stringstream ss;
+        for (auto it = clientes.begin(); it != clientes.end(); it++) {
+            ss << it->second->toString() << std::endl;
+        }
+        return ss.str();
     }
-    return str;
+    else {
+        throw std::runtime_error("Nenhuma conta cadastrada");
+    }
 }
 

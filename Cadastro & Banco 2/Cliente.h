@@ -4,20 +4,23 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <vector>
 #include <sstream>
 #include "contas/Conta.h"
 
 class Cliente {
     private:
     std::string clienteId;
-    std::map<int, Conta*> contas;
+    std::map<std::string, Conta*> contas;
     public:
     Cliente(std::string clienteId);
 
     void addConta(Conta* conta);
+    void delConta(std::string id);
     std::string toString();
     std::string getClienteId();
-    Conta* getConta(int id);
+    std::vector<Conta*> getContas();
+    Conta* getConta(std::string id);
 };
 
 #endif
