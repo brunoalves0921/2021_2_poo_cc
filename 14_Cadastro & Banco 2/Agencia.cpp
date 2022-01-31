@@ -145,7 +145,9 @@ std::string Agencia::toString() {
     if (contas.size() > 0) {
         std::stringstream ss;
         for (auto it = clientes.begin(); it != clientes.end(); it++) {
-            ss << it->second->toString() << std::endl;
+            std::string saldoFormatado = it->second->toString();
+            std::replace (saldoFormatado.begin(), saldoFormatado.end(), '.', ',');
+            ss << saldoFormatado << "\n";
         }
         return ss.str();
     }

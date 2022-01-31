@@ -7,6 +7,7 @@
 #include <sstream>
 #include <time.h>
 #include <stdio.h>
+#include <algorithm>
 #include <fstream>
 #include "Cliente.h"
 #include "contas/Conta.h"

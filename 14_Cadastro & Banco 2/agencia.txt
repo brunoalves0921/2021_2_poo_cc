@@ -1,0 +1,6 @@
+bruno 20148-7 CC 0
+anderson 39407-6 CC 0
+victor 58047-2 CC 0
+bruno 69915-1 CP 1e+07
+anderson 79504-6 CP 0
+victor 92770-2 CP 0

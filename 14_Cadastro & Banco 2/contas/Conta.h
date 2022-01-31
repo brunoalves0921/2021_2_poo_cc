@@ -19,8 +19,8 @@ class Conta {
         }
         virtual void attMensal() = 0;
         void checkValor(double valor) {
-            if (valor < 0) {
-                throw std::runtime_error("Valor invalido");
+            if (valor <= 0) {
+                throw std::runtime_error("Valor inválido, por favor digite um valor maior que ○ \"0\"");
             }
         }
 

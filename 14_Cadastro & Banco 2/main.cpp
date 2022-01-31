@@ -47,14 +47,9 @@ int main () {
                 double valor;
                 std::cin >> id >> valor;
                 try {
-                    if (valor > 0) {
-                        agencia.sacar(id, valor);
-                        std::cout << "Saque realizado com sucesso!" << std::endl;
-                        printf("Foi retirado : R$ %.3f da conta %s\n", valor, id.c_str());
-                    }
-                    else {
-                        std::cout << "Valor inválido! digite um número maior que \"0\"" << std::endl;
-                    }
+                    agencia.sacar(id, valor);
+                    std::cout << "Saque realizado com sucesso!" << std::endl;
+                    printf("Foi retirado : R$ %.3f da conta %s\n", valor, id.c_str());
                 }
                 catch(std::runtime_error &e) {
                     std::cout << e.what() << std::endl;
@@ -66,14 +61,9 @@ int main () {
                 double valor;
                 std::cin >> id >> valor;
                 try {
-                    if(valor > 0) {
-                        agencia.depositar(id, valor);
-                        std::cout << "Deposito realizado com sucesso!" << std::endl;
-                        printf("Foi depositado : R$ %.3f na conta %s\n", valor, id.c_str());
-                    }
-                    else {
-                        std::cout << "Valor inválido! digite um número maior que \"0\"" << std::endl;
-                    }
+                    agencia.depositar(id, valor);
+                    std::cout << "Deposito realizado com sucesso!" << std::endl;
+                    printf("Foi depositado : R$ %.3f na conta %s\n", valor, id.c_str());
                 }
                 catch(std::runtime_error &e) {
                     std::cout << e.what() << std::endl;
@@ -86,15 +76,9 @@ int main () {
                 std::string idTransfer;
                 std::cin >> id >> valor >> idTransfer;
                 try {
-                    if (valor > 0) {
-                        agencia.transferir(id, valor, idTransfer);
-                        std::cout << "Transferência realizada com sucesso!" << std::endl;
-                        printf("Foi transferido : R$ %.3f da conta %s para a conta %s\n", valor, id.c_str(), idTransfer.c_str());
-                    }
-                    else {
-                        std::cout << "Valor inválido! digite um número maior que \"0\"" << std::endl;
-                    }
-                    
+                    agencia.transferir(id, valor, idTransfer);
+                    std::cout << "Transferência realizada com sucesso!" << std::endl;
+                    printf("Foi transferido : R$ %.3f da conta %s para a conta %s\n", valor, id.c_str(), idTransfer.c_str());    
                 }
                 catch(std::runtime_error &e) {
                     std::cout << e.what() << std::endl;
