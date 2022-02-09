@@ -21,6 +21,21 @@ void Twitter::sendTweet(string name, string post) {
     nextTweetId++;
 }
 
+void Twitter::sendRt(string name, int id, string comment) {
+    User *user = users[name];
+    if (user == NULL) {
+        throw "Usuario nao existe";
+    }
+    Message *message = tweets[id];
+    if (message == NULL) {
+        throw "Mensagem nao existe";
+    }
+    Message *rt = new Message(user, comment, nextTweetId);
+    tweets[nextTweetId] = rt;
+    user->retweet(message, rt);
+    nextTweetId++;
+}
+
 void Twitter::like(string name, int id) {
     User *user = users[name];
     if (user == NULL) {
@@ -47,6 +62,22 @@ void Twitter::unlike(string name, int id) {
 
 User *Twitter::getUser(string name) {
     return users[name];
+}
+
+void Twitter::removeUser(string name) {
+    User *user = users[name];
+    if (user == NULL) {
+        throw "Usuario nao existe: " + name;
+    }
+    for (auto &it: tweets) {
+        user->unlike(it.second);
+    }
+    user->rejectAll();
+    user->unfollowAll();
+    user->getInbox()->deleteAll();
+    delete user->getInbox();
+    users.erase(name);
+    delete user;
 }
 
 string Twitter::getTimeline(string name) {

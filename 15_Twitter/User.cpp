@@ -32,8 +32,23 @@ void User::unfollow(User *user) {
     if (following[user->getName()] == NULL) {
         throw "Você não está seguindo " + user->getName();
     }
+    getInbox()->removeMessagesFrom(user);
     following.erase(user->getName());
     user->followers.erase(name);
+}
+
+void User::unfollowAll() {
+    for (auto it = following.begin(); it != following.end(); it++) {
+        it->second->followers.erase(name);
+    }
+    following.clear();
+}
+
+void User::rejectAll() {
+    for (auto it = followers.begin(); it != followers.end(); it++) {
+        it->second->unfollow(this);
+    }
+    followers.clear();
 }
 
 void User::tweetar(Message *message) {
@@ -43,6 +58,10 @@ void User::tweetar(Message *message) {
     }
 }
 
+void User::retweet(Message *message, Message *rt) {
+    tweetar(rt);
+    rt->setRt(message);
+}
 
 string User::toString() {
     bool firstCase = true;

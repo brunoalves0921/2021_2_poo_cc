@@ -23,9 +23,11 @@ void ajuda(){
     std::cout << "| $unfollow <Seguidor> <Seguido> : Para fazer um usuário deixar de seguir o outro" << std::endl;
     std::cout << "| $timeline <Usuário> : Para ver a timeline de um usuário" << std::endl;
     std::cout << "| $tweetar <Usuário> <Mensagem> : Para fazer um tweet" << std::endl;
+    std::cout << "| $rt <Usuário> <Tweet> <Mensagem> : Para fazer um retweet" << std::endl;
     std::cout << "| $like <Usuário> <Tweet> : Para dar like em um tweet" << std::endl;
     std::cout << "| $unlike <Usuário> <Tweet> : Para dar unlike em um tweet" << std::endl;
     std::cout << "| $ajuda : Para exibir este menu de ajuda novamente" << std::endl;
+    std::cout << "| $rm <Usuário> : Para remover um usuário do Twitter" << std::endl;
     std::cout << "| $exit : Para sair" << std::endl;
 }
 
@@ -65,6 +67,15 @@ int main() {
                 twitter.sendTweet(name, post);
                 cout << "O usuário " << name << " tweetou: " << post << endl;
             }
+            else if(command == "rt") {
+                string name, post;
+                int id;
+                cin >> name >> id;
+                getline(cin, post);
+                post = post.substr(1);
+                twitter.sendRt(name, id, post);
+                cout << "O usuário " << name << " retweetou o tweet " << id << ": " << post << endl;
+            }
             else if(command == "like") {
                 string name;
                 int id;
@@ -87,6 +98,12 @@ int main() {
             else if(command == "show") {
                 cout << twitter.toString() << endl;
             }
+            else if(command == "rm") {
+                string name;
+                cin >> name;
+                twitter.removeUser(name);
+                cout << "Usuário removido: " << name << endl;
+            }
             else if(command == "exit") {
                 cout << "Encerrando o Twitter\n";
                 break;
@@ -94,7 +111,8 @@ int main() {
             else {
                 cout << "Comando invalido" << endl;
             }
-        } catch (const string &ex) {
+        } 
+        catch (const string &ex) {
             cerr << "Erro: " << ex << endl;
         }
     }

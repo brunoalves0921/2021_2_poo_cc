@@ -1,0 +1,6 @@
+add bruno
+add victor
+tweetar bruno oiii
+tweetar victor olá
+like victor 0
+rt victor 0 fds

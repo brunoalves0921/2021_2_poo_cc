@@ -21,9 +21,11 @@ public:
 
     void addUser(string name);
     void sendTweet(string name, string post);
+    void sendRt(string name, int id, string comment);
     void like(string name, int id);
     void unlike(string name, int id);
     User* getUser(string name);
+    void removeUser(string name);
 
     string getTimeline(string name);
     std::string toString();

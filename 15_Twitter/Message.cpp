@@ -1,6 +1,8 @@
 #include "Message.hpp"
 
-Message::Message(User *senderPost, string post, int id) : senderPost(senderPost), post(post), id(id) { }
+Message::Message(User *senderPost, string post, int id) : senderPost(senderPost), post(post), id(id) {
+    rt = nullptr;
+}
 
 
 int Message::getId() {
@@ -13,8 +15,29 @@ void Message::like(User *user) {
 }
 
 void Message::unlike(User *user) {
-    for(unsigned int i = 0; i < likes.size(); i++) if (likes[i] == user) likes.erase(likes.begin() + i);
+    bool found = false;
+    for (User *it: likes) {
+        if (it == user) {
+            found = true;
+            for(unsigned int i = 0; i < likes.size(); i++) if (likes[i] == user) likes.erase(likes.begin() + i);
+        }
+    }
+    if (!found) throw "O Usuario " + user->getName() + " nao curtiu esse post!";
+   
 }
+
+void Message::setRt(Message *message) {
+    rt = message;
+}
+
+void Message::setDeleted() {
+    deleted = true;
+}
+
+bool Message::isDeleted() {
+    return deleted;
+}
+
 
 string Message::toString() {
     stringstream ss;
@@ -25,6 +48,9 @@ string Message::toString() {
             ss << ", " << likes[i]->getName();
         }
         ss << "]";
+    }
+    if (rt != nullptr) {
+        ss << "\n\t" << rt->toString();
     }
     return ss.str();
 }

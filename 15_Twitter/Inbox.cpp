@@ -32,6 +32,22 @@ void Inbox::readMessage(Message* message) {
     unreadMessages.erase(message->getId());
 }
 
+void Inbox::removeMessagesFrom(User* user) {
+    for(Message *msg: user->getInbox()->getAll()) {
+        allMessages.erase(msg->getId());
+        unreadMessages.erase(msg->getId());
+    }
+}
+
+void Inbox::deleteAll() {
+    for(auto &msg: allMessages) {
+        msg.second->setDeleted();
+        delete msg.second;
+    }
+    allMessages.clear();
+    unreadMessages.clear();
+}
+
 string Inbox::toString() {
     stringstream ss;
     ss << "Inbox of " << user->getName() << ": " << endl;

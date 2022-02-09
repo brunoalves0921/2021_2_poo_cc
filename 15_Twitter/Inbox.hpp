@@ -27,6 +27,8 @@ public:
     Message* getTweet(int id);
     void addMessage(Message* message);
     void readMessage(Message* message);
+    void removeMessagesFrom(User* user);
+    void deleteAll();
 
     string toString ();
 };

@@ -17,6 +17,8 @@ private:
     string post;
     int id;
     vector<User*> likes;
+    Message *rt;
+    bool deleted;
 
 public:
     Message(User *senderPost, string post, int id);
@@ -24,6 +26,10 @@ public:
     int getId();
     void like(User *user);
     void unlike(User *user);
+    void setRt(Message *message);
+
+    void setDeleted();
+    bool isDeleted();
 
     string toString ();
 };
